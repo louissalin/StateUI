@@ -95,6 +95,30 @@ public class when_creating_paths : StateMachineWithOneState
 	protected Path path;
 }
 
+public class when_creating_paths_from_the_same_state : StateMachineWithOneState
+{
+	[Observation]
+	public void should_have_create_a_path_with_two_destinations()
+	{
+		path.FromState.ShouldEqual(sut.GetState(1));
+		path.Destinations.Length.ShouldEqual(2);
+		path.Destinations[0].ShouldEqual(sut.GetState(2));
+		path.Destinations[1].ShouldEqual(sut.GetState(3));
+	}
+
+	protected override void Because()
+	{
+		base.Because();
+
+		sut.AddState();
+		sut.AddState();
+		sut.CreatePathFrom.State(1).To.State(2).GetPath();
+		path = sut.CreatePathFrom.State(1).To.State(3).GetPath();
+	}
+
+	protected Path path;
+}
+
 public class when_creating_invalid_paths : StateMachineWithOneState
 {
 	[Observation]
