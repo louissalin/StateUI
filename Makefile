@@ -1,8 +1,21 @@
-cdd.dll: src/StateMachine.cs
-	gmcs /out:bin/cdd.dll /lib:lib /t:library src/StateMachine.cs /r:Ninject.dll
+CSC = gmcs
+DLLS = stateMachine.dll
+SPECS = stateMachine_specs.dll
+ALL = $(DLLS) $(SPECS)
 
-cdd_specs.dll: cdd.dll tests/StateMachineSpecs.cs
-	gmcs /out:bin/cdd_specs.dll /lib:lib /t:library tests/StateMachineSpecs.cs /r:bin/cdd.dll /r:nunit.framework.dll /r:SpecUnit.dll
+project: $(DLLS)
+all: $(ALL)
 
-all: cdd.dll cdd_specs.dll
-	cp lib/*.dll bin
+stateMachine.dll: src/StateMachine.cs
+	$(CSC) /out:bin/StateMachine.dll /lib:lib /t:library src/StateMachine.cs \
+		   /r:Ninject.dll
+	cp lib/Ninject.dll bin
+
+stateMachine_specs.dll: stateMachine.dll tests/StateMachineSpecs.cs
+	$(CSC) /out:bin/StateMachine_specs.dll /lib:lib /t:library tests/StateMachineSpecs.cs \
+		 /r:bin/StateMachine.dll \
+		 /r:nunit.framework.dll \
+		 /r:SpecUnit.dll
+	cp lib/SpecUnit.dll bin
+	cp lib/nunit.framework.dll bin
+
