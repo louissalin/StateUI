@@ -95,6 +95,29 @@ public class when_creating_paths : StateMachineWithOneState
 	protected Path path;
 }
 
+public class when_creating_invalid_paths : StateMachineWithOneState
+{
+	[Observation]
+	public void should_throw_an_exception_when_creating_path_with_invalid_state()
+	{
+		typeof(ArgumentException).ShouldBeThrownBy(
+				() => sut.CreatePathFrom.State(3))
+			.ShouldContainErrorMessage("There is no state with index 3");
+
+		typeof(ArgumentException).ShouldBeThrownBy(
+				() => sut.CreatePathFrom.State(1).To.State(3))
+			.ShouldContainErrorMessage("There is no state with index 3");
+	}
+
+	[Observation]
+	public void should_throw_an_exception_when_creating_a_path_with_same_states()
+	{
+			typeof(ArgumentException).ShouldBeThrownBy(
+				() => sut.CreatePathFrom.State(1).To.State(1))
+			.ShouldContainErrorMessage("Can't add a path between two equal states");
+	}
+}
+
 public class StateMachineWithOneState : StateMachineSpec 
 {
 	protected override void Because()

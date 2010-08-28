@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="bin/cdd_specs.dll" total="8" failures="0" not-run="0" date="2010-08-27" time="22:58:07">
-  <environment nunit-version="2.4.8.0" clr-version="2.0.50727.1433" os-version="Unix 2.6.34.12" platform="Unix" cwd="/home/louis/Projects/breakable/contextDriven" machine-name="linux-qcut.site" user="louis" user-domain="linux-qcut.site" />
+<test-results name="bin/StateMachine_specs.dll" total="10" failures="0" not-run="0" date="2010-08-28" time="14:59:47">
+  <environment nunit-version="2.4.8.0" clr-version="2.0.50727.1433" os-version="Unix 2.6.34.12" platform="Unix" cwd="/home/louis/Projects/breakable/StateUI" machine-name="linux-qcut.site" user="louis" user-domain="linux-qcut.site" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite name="bin/cdd_specs.dll" success="True" time="0.101" asserts="0">
+  <test-suite name="bin/StateMachine_specs.dll" success="True" time="0.116" asserts="0">
     <results>
       <test-suite name="StateMachineSpec" success="True" time="0.000" asserts="0">
         <results />
@@ -11,21 +11,27 @@
       <test-suite name="StateMachineWithOneState" success="True" time="0.000" asserts="0">
         <results />
       </test-suite>
-      <test-suite name="when_adding_other_states" success="True" time="0.020" asserts="0">
+      <test-suite name="when_adding_other_states" success="True" time="0.017" asserts="0">
         <results>
-          <test-case name="when_adding_other_states.should_increase_the_state_id_by_one_each_time" executed="True" success="True" time="0.014" asserts="3" />
+          <test-case name="when_adding_other_states.should_increase_the_state_id_by_one_each_time" executed="True" success="True" time="0.011" asserts="3" />
         </results>
       </test-suite>
-      <test-suite name="when_adding_the_first_state" success="True" time="0.009" asserts="0">
+      <test-suite name="when_adding_the_first_state" success="True" time="0.005" asserts="0">
         <results>
-          <test-case name="when_adding_the_first_state.it_should_be_the_starting_state" executed="True" success="True" time="0.005" asserts="1" />
+          <test-case name="when_adding_the_first_state.it_should_be_the_starting_state" executed="True" success="True" time="0.002" asserts="1" />
           <test-case name="when_adding_the_first_state.it_should_have_a_state" executed="True" success="True" time="0.001" asserts="1" />
           <test-case name="when_adding_the_first_state.it_should_have_an_id_of_one" executed="True" success="True" time="0.000" asserts="1" />
         </results>
       </test-suite>
+      <test-suite name="when_creating_invalid_paths" success="True" time="0.005" asserts="0">
+        <results>
+          <test-case name="when_creating_invalid_paths.should_throw_an_exception_when_creating_a_path_with_same_states" executed="True" success="True" time="0.003" asserts="3" />
+          <test-case name="when_creating_invalid_paths.should_throw_an_exception_when_creating_path_with_invalid_state" executed="True" success="True" time="0.001" asserts="6" />
+        </results>
+      </test-suite>
       <test-suite name="when_creating_paths" success="True" time="0.004" asserts="0">
         <results>
-          <test-case name="when_creating_paths.should_have_create_a_path" executed="True" success="True" time="0.004" asserts="3" />
+          <test-case name="when_creating_paths.should_have_create_a_path" executed="True" success="True" time="0.003" asserts="3" />
         </results>
       </test-suite>
       <test-suite name="when_specifying_states" success="True" time="0.001" asserts="0">
