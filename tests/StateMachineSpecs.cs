@@ -142,6 +142,69 @@ public class when_creating_invalid_paths : StateMachineWithOneState
 	}
 }
 
+public class when_starting_up : StateMachineWithOneState
+{
+	[Observation]
+	public void should_set_the_current_state_to_the_starting_state()
+	{
+		sut.CurrentState.ShouldEqual(sut.StartState);
+	}
+}
+
+public class when_changing_to_an_invalid_state : StateMachineWithOneState
+{
+	[Observation]
+	public void should_throw_an_exception_if_there_are_not_paths_from_the_current_state()
+	{
+		typeof(Exception).ShouldBeThrownBy(
+				() => sut.ChangeState(2))
+			.ShouldContainErrorMessage("There is no path to any other state");
+	}
+
+	[Observation]
+	public void should_throw_an_exception_if_the_state_does_not_exist()
+	{
+		typeof(ArgumentException).ShouldBeThrownBy(
+				() => sut.ChangeState(3))
+			.ShouldContainErrorMessage("State 3 does not exist");
+	}
+
+	[Observation]
+	public void should_throw_an_exception_if_the_state_does_not_have_a_path_to_the_new_state()
+	{
+		sut.AddState(s => s.Name = "state 3");
+		sut.CreatePathFrom.State(1).To.State(3);
+
+		typeof(ArgumentException).ShouldBeThrownBy(
+				() => sut.ChangeState(2))
+			.ShouldContainErrorMessage("There is no path from state 1 to state 2");
+	}
+
+	protected override void Because()
+	{
+		base.Because();
+		sut.AddState(s => s.Name = "state 2");
+	}
+}
+
+public class when_changing_to_a_valid_state : StateMachineWithOneState
+{
+	[Observation]
+	public void should_change_the_current_state_to_the_new_state()
+	{
+		sut.CurrentState.ShouldEqual(sut.GetState(2));
+	}
+
+	protected override void Because()
+	{
+		base.Because();
+
+		sut.AddState(s => s.Name = "state 2");
+		sut.CreatePathFrom.State(1).To.State(2);
+		sut.ChangeState(2);
+	}
+}
+
 public class StateMachineWithOneState : StateMachineSpec 
 {
 	protected override void Because()
