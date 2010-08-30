@@ -1,28 +1,37 @@
 using System.Collections.Generic;
 
-public class State
+namespace StateUI
 {
-	public int Id { get; set; }
-	public string Name { get; set; }
-}
-
-public class Path
-{
-	private List<State> destinations = new List<State>();
-
-	public State FromState { get; private set; }
-	public State[] Destinations
+	public class State : ContextOwner
 	{
-		get { return destinations.ToArray(); }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		
+		public void InitContext()
+		{
+			if (Context != null)
+				Context.Init(this);
+		}
 	}
 
-	public Path(State fromState)
+	public class Path
 	{
-		FromState = fromState;
-	}
+		private List<State> destinations = new List<State>();
 
-	public void AddDestination(State destination)
-	{
-		destinations.Add(destination);
+		public State FromState { get; private set; }
+		public State[] Destinations
+		{
+			get { return destinations.ToArray(); }
+		}
+
+		public Path(State fromState)
+		{
+			FromState = fromState;
+		}
+
+		public void AddDestination(State destination)
+		{
+			destinations.Add(destination);
+		}
 	}
 }
