@@ -159,44 +159,11 @@ namespace StateUISpecs
 				sut.CurrentState.ShouldEqual(sut.StartState);
 			}
 
-		[Observation]
-			public void should_execute_the_context_of_the_state_machine()
-			{
-				sut.ContextExecuted.ShouldBeTrue();
-			}
-
-		[Observation]
-		public void should_execute_the_context_of_the_starting_state()
-		{
-			sut.CurrentState.ContextExecuted.ShouldBeTrue();
-		}
-		
 		protected override void Because()
 		{
 			base.Because();
-
-			sut.GetState(1).SetContext(new SpecContext());
 			sut.Start();
 		}
-	}
-
-	[TestFixture]
-	public class when_starting_up_without_a_context : ContextSpecification
-	{
-		[Observation]
-		public void should_throw_an_exception()
-		{
-			typeof(Exception).ShouldBeThrownBy(
-					() => sut.Start())
-				.ShouldContainErrorMessage("There is no context, cannot start the state machine");
-		}
-
-		protected override void Context()
-		{
-			sut = new StateMachine();
-		}
-
-		protected StateMachine sut;
 	}
 
 	public class when_changing_to_an_invalid_state : StateMachineWithOneState
@@ -236,32 +203,6 @@ namespace StateUISpecs
 		}
 	}
 
-	public class when_changing_to_a_valid_state : StateMachineWithOneState
-	{
-		[Observation]
-			public void should_change_the_current_state_to_the_new_state()
-			{
-				sut.CurrentState.ShouldEqual(sut.GetState(2));
-			}
-
-		[Observation]
-		public void should_execute_the_state_machine_context_and_state_context()
-		{
-			sut.ContextExecuted.ShouldBeTrue();
-			sut.CurrentState.ContextExecuted.ShouldBeTrue();
-		}
-
-		protected override void Because()
-		{
-			base.Because();
-
-			sut.AddState(s => s.Name = "state 2");
-			sut.CreatePathFrom.State(1).To.State(2);
-			sut.Start();
-			sut.ChangeState(2);
-		}
-	}
-
 	public class StateMachineWithOneState : StateMachineSpec 
 	{
 		protected override void Because()
@@ -275,10 +216,7 @@ namespace StateUISpecs
 	{
 		protected override void Context()
 		{
-			var context = new SpecContext();
-
 			sut = new StateMachine();
-			sut.SetContext(context);
 		}
 
 		protected StateMachine sut;

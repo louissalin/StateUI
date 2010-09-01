@@ -2,16 +2,10 @@ using System.Collections.Generic;
 
 namespace StateUI
 {
-	public class State : ContextOwner
+	public class State 
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
-		
-		public void InitContext()
-		{
-			if (Context != null)
-				Context.Init(this);
-		}
 	}
 
 	public class Path

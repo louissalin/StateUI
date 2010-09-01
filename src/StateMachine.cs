@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StateUI
 {
-	public class StateMachine : ContextOwner
+	public class StateMachine 
 	{
 		private List<State> _states = new List<State>();
 		private List<Path> _paths = new List<Path>();
@@ -87,25 +87,20 @@ namespace StateUI
 
 		public void Start()
 		{
-			if (Context == null)
-				throw new Exception("There is no context, cannot start the state machine");
-
 			if (_states.Count == 0)
 				throw new Exception("There are no state in the state machine");
 
-			Context.Init(this);
 			SetCurrentState(1);
 		}
 
 		private void SetCurrentState(int stateId)
 		{
-			SetCurrentState(GetState(1));
+			SetCurrentState(GetState(stateId));
 		}
 
 		private void SetCurrentState(State state)
 		{
 			CurrentState = state;
-			CurrentState.InitContext();
 		}
 
 		public override string ToString()
