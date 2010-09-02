@@ -34,6 +34,17 @@ namespace StateUI
 			return AddState(null);
 		}
 
+		public State AddState(Action<State> initializer)
+		{
+			var state = new State { Id = _states.Count + 1 };
+			_states.Add(state);
+
+			if (initializer != null)
+				initializer(state);
+
+			return state;
+		}
+
 		public void ChangeState(int stateId)
 		{
 			if (GetState(stateId) == null)
@@ -48,17 +59,6 @@ namespace StateUI
 				throw new ArgumentException(string.Format("There is no path from state {0} to state {1}", CurrentState.Id, stateId));
 
 			SetCurrentState(toState);
-		}
-
-		public State AddState(Action<State> initializer)
-		{
-			var state = new State { Id = _states.Count + 1 };
-			_states.Add(state);
-
-			if (initializer != null)
-				initializer(state);
-
-			return state;
 		}
 
 		public State GetState(int id)
