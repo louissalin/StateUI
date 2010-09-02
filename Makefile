@@ -11,13 +11,12 @@ BS_TESTS =  $(TESTS_SRC)BootStrapper/
 
 DLLS = StateMachine.dll NinjectBootStrapper.dll
 SPECS = StateMachine_specs.dll NinjectBootStrapper_specs.dll
-ALL = $(DLLS) $(SPECS)
 
 project: $(DLLS)
-all: $(ALL)
+all: $(DLLS) $(SPECS)
 
-NinjectBootStrapper.dll: StateMachine.dll $(BS_SRC)NinjectBootStrapper.cs \
-						 $(BS_SRC)MainModule.cs 					 
+NinjectBootStrapper.dll: StateMachine.dll NinjectBootStrapper_no_dep
+NinjectBootStrapper_no_dep: $(BS_SRC)NinjectBootStrapper.cs $(BS_SRC)MainModule.cs
 	$(CSC) /out:$(OUT_DIR)NinjectBootStrapper.dll /lib:lib /t:library \
 		   $(BS_SRC)NinjectBootStrapper.cs $(BS_SRC)Context.cs $(BS_SRC)MainModule.cs \
 		   /r:bin/Ninject.dll \
@@ -28,10 +27,11 @@ StateMachine.dll: $(SM_SRC)StateMachine.cs $(SM_SRC)State.cs
 	$(CSC) /out:$(OUT_DIR)StateMachine.dll /lib:lib /t:library \
 		   $(SM_SRC)StateMachine.cs $(SM_SRC)State.cs $(SM_SRC)CreatePathExpression.cs
 
-NinjectBootStrapper_specs.dll: StateMachine.dll NinjectBootStrapper.dll \
-							   $(BS_TESTS)NinjectBootStrapper_specs.cs \
-							   $(BS_TESTS)Context_specs.cs \
-							   $(BS_TESTS)MainModule_specs.cs
+NinjectBootStrapper_specs.dll: StateMachine.dll NinjectBootStrapper_specs_no_dep
+NinjectBootStrapper_specs_no_dep: NinjectBootStrapper_no_dep \
+							      $(BS_TESTS)NinjectBootStrapper_specs.cs \
+							      $(BS_TESTS)Context_specs.cs \
+							      $(BS_TESTS)MainModule_specs.cs
 	$(CSC) /out:$(OUT_DIR)NinjectBootStrapper_specs.dll /lib:lib /t:library \
 		   $(BS_TESTS)NinjectBootStrapper_specs.cs $(BS_TESTS)Context_specs.cs \
 		   $(BS_TESTS)MainModule_specs.cs \
