@@ -1,3 +1,5 @@
+using System.Linq;
+
 using NUnit.Framework;
 using SpecUnit;
 
@@ -6,6 +8,23 @@ using StateUI.NinjectBootStrapper;
 
 namespace StateUISpecs.BootStrapper
 {
+	public class when_add_child_contexts : ContextWithStateMachine
+	{
+		[Observation]
+		public void should_add_the_child_to_the_root_context()
+		{
+			sut.Children.Any(c => c.AssociatedState.Id == 2).ShouldBeTrue();
+		}
+		
+		protected override void Because()
+		{
+			childContext = new ContextStub(stateMachine, stateMachine.GetState(2));
+			sut.AddChild(childContext);
+		}
+
+		protected ContextStub childContext;
+	}
+
 	public class when_associating_a_context_with_a_state : ContextWithStateMachine
 	{
 		[Observation]

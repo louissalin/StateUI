@@ -1,8 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
+
 using Ninject.Modules;
 
 namespace StateUI.NinjectBootStrapper
 {
-	public class MainModule :NinjectModule
+	public class MainModule : NinjectModule
 	{
 		private Context _rootContext;
 		
@@ -14,6 +17,14 @@ namespace StateUI.NinjectBootStrapper
 		public override void Load()
 		{
 			_rootContext.Load();
+
+			foreach(var child in ValidChildren())
+				child.Load();
+		}
+
+		private IEnumerable<Context> ValidChildren()
+		{
+			return _rootContext.Children.Where(c => c.IsValid);
 		}
 	}
 }
