@@ -4,6 +4,7 @@ OUT_DIR = bin/
 SRC = src/
 SM_SRC = $(SRC)StateMachine/
 BS_SRC = $(SRC)BootStrapper/
+SAMPLE_SRC = $(SRC)Samples/
 
 TESTS_SRC = tests/
 SM_TESTS =  $(TESTS_SRC)StateMachine/
@@ -11,9 +12,18 @@ BS_TESTS =  $(TESTS_SRC)BootStrapper/
 
 DLLS = StateMachine.dll NinjectBootStrapper.dll
 SPECS = StateMachine_specs.dll NinjectBootStrapper_specs.dll
+SAMPLES = ConsoleSamurai.exe
 
-project: $(DLLS)
-all: $(DLLS) $(SPECS)
+project: make_folders $(DLLS)
+samples: make_folders $(SAMPLES)
+all: make_folders $(DLLS) $(SPECS) $(SAMPLES)
+
+ConsoleSamurai.exe: $(DLLS) $(SAMPLE_SRC)ConsoleSamurai.cs
+
+	$(CSC) /out:$(OUT_DIR)Samples/ConsoleSamurai.exe \
+		   $(SAMPLE_SRC)ConsoleSamurai.cs \
+		   /r:bin/StateMachine.dll \
+		   /r:bin/NinjectBootStrapper.dll
 
 NinjectBootStrapper.dll: StateMachine.dll NinjectBootStrapper_no_dep
 NinjectBootStrapper_no_dep: $(BS_SRC)NinjectBootStrapper.cs $(BS_SRC)MainModule.cs
@@ -37,6 +47,7 @@ NinjectBootStrapper_specs_no_dep: NinjectBootStrapper_no_dep \
 		   $(BS_TESTS)MainModule_specs.cs \
 		   /r:nunit.framework.dll \
 		   /r:SpecUnit.dll \
+		   /r:bin/Ninject.dll \
 		   /r:bin/NinjectBootStrapper.dll \
 		   /r:bin/StateMachine.dll
 
@@ -49,3 +60,5 @@ StateMachine_specs.dll: StateMachine.dll $(SM_TESTS)StateMachineSpecs.cs
 	cp lib/SpecUnit.dll $(OUT_DIR)
 	cp lib/nunit.framework.dll $(OUT_DIR)
 
+make_folders:
+	mkdir -p bin/Samples

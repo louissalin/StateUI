@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using Ninject.Modules;
+
 using StateUI;
 
 namespace StateUI.NinjectBootStrapper
@@ -29,6 +31,6 @@ namespace StateUI.NinjectBootStrapper
 			_childContexts.Add(child);
 		}
 
-		public abstract void Load();
+		public abstract void Load(NinjectModule module);
 	}
 }

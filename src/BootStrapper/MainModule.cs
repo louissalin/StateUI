@@ -16,10 +16,10 @@ namespace StateUI.NinjectBootStrapper
 
 		public override void Load()
 		{
-			_rootContext.Load();
+			_rootContext.Load(this);
 
 			foreach(var child in ValidChildren())
-				child.Load();
+				child.Load(this);
 		}
 
 		private IEnumerable<Context> ValidChildren()

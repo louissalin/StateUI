@@ -1,5 +1,6 @@
 using System.Linq;
 
+using Ninject.Modules;
 using NUnit.Framework;
 using SpecUnit;
 
@@ -66,6 +67,6 @@ namespace StateUISpecs.BootStrapper
 		{
 		}
 
-		public override void Load() {}
+		public override void Load(NinjectModule module) {}
 	}
 }
