@@ -39,7 +39,11 @@ $ make
 
 This will make the libraries, but won't compile the tests.
 
+$ make samples
+
+This will build the sample projects.
+
 $ make all
 
-This will compile the libraries and the unit tests.
+This will compile everything.
 
