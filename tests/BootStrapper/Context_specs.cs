@@ -62,6 +62,8 @@ namespace StateUISpecs.BootStrapper
 
 	public class ContextStub : Context
 	{
+		public ContextStub() {}
+
 		public ContextStub(StateMachine stateMachine, State associatedState)
 			: base(stateMachine, associatedState)
 		{

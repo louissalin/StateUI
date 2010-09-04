@@ -22,7 +22,8 @@ ConsoleSamurai.exe: $(DLLS) $(SAMPLE_SRC)ConsoleSamurai.cs
 	$(CSC) /out:$(OUT_DIR)Samples/ConsoleSamurai.exe \
 		   $(SAMPLE_SRC)ConsoleSamurai.cs \
 		   /r:bin/StateMachine.dll \
-		   /r:bin/NinjectBootStrapper.dll
+		   /r:bin/NinjectBootStrapper.dll \
+		   /r:bin/Ninject.dll \
 
 NinjectBootStrapper.dll: StateMachine.dll NinjectBootStrapper_no_dep
 NinjectBootStrapper_no_dep: $(BS_SRC)NinjectBootStrapper.cs $(BS_SRC)MainModule.cs

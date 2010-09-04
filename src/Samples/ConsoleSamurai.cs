@@ -1,6 +1,8 @@
 using StateUI;
 using StateUI.NinjectBootStrapper;
 
+using Ninject.Modules;
+
 namespace ConsoleSamuraiApp
 {
 	public class App
@@ -20,6 +22,8 @@ namespace ConsoleSamuraiApp
 
 	public class SamuraiContext : Context
 	{
+		public SamuraiContext() {}
+
 		public SamuraiContext(StateMachine stateMachine, State associatedState)
 			: base(stateMachine, associatedState)
 		{
@@ -32,6 +36,8 @@ namespace ConsoleSamuraiApp
 
 	public class UseSwordContext : Context
 	{
+		public UseSwordContext() {}
+
 		public UseSwordContext(StateMachine stateMachine, State associatedState)
 			: base(stateMachine, associatedState)
 		{
@@ -44,7 +50,9 @@ namespace ConsoleSamuraiApp
 
 	public class UseBareHandsContext : Context
 	{
-		public UseSwordContext(StateMachine stateMachine, State associatedState)
+		public UseBareHandsContext() {}
+
+		public UseBareHandsContext(StateMachine stateMachine, State associatedState)
 			: base(stateMachine, associatedState)
 		{
 		}

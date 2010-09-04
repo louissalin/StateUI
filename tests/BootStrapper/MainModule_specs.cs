@@ -91,6 +91,9 @@ namespace StateUISpecs.BootStrapper
 	{
 		public bool LoadExecuted { get; set; }
 
+		public MainContextStub()
+		{}
+
 		public MainContextStub(StateMachine stateMachine, State associatedState)
 			: base(stateMachine, associatedState)
 		{

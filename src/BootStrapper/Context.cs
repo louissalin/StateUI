@@ -24,6 +24,10 @@ namespace StateUI.NinjectBootStrapper
 		public State AssociatedState { get; private set; }
 		public Context[] Children { get { return _childContexts.ToArray(); } }
 
+		public Context()
+		{
+		}
+
 		public Context(StateMachine stateMachine, State associatedState)
 		{
 			AssociatedState = associatedState;
