@@ -33,7 +33,8 @@ Compiling:
 
 To compile, download NInject and add NInject.dll to the lib/ folder. If you'll want to run the unit tests, you will need nunit.framework.dll and SpecUnit.dll in the lib/ folder also. Make sure that the nunit dll is of the same version as the one used to compile SpecUnit.
 
-If you are on Windows, edit the Makefile and change the variable CSC to point to your C# compiler of choice.
+If you are on Windows, well... I hope makefiles work fine on Windows!
+More serioulsy, it might not be so hard to create a solution file for this or to make the makefile work.
 
 $ make
 
