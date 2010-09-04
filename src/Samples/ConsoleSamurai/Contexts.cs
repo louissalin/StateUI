@@ -1,25 +1,10 @@
+using Ninject.Modules;
+
 using StateUI;
 using StateUI.NinjectBootStrapper;
 
-using Ninject.Modules;
-
 namespace ConsoleSamuraiApp
 {
-	public class App
-	{
-		public static void Main(string[] args)
-		{
-			var stateMachine = new StateMachine();
-			stateMachine.AddState(s => s.Name = "UseSword");
-			stateMachine.AddState(s => s.Name = "LoseSword");
-			stateMachine.CreatePathFrom.State("UseSword").To.State("LoseSword");
-			stateMachine.Start();
-
-			var samuraiContext = new SamuraiContext();
-			var mainModule = new MainModule(samuraiContext);
-		}
-	}
-
 	public class SamuraiContext : Context
 	{
 		public SamuraiContext() {}
@@ -31,6 +16,7 @@ namespace ConsoleSamuraiApp
 
 		public override void Load(NinjectModule module)
 		{
+			module.Bind<Samurai>().ToSelf();
 		}
 	}
 
@@ -45,6 +31,7 @@ namespace ConsoleSamuraiApp
 
 		public override void Load(NinjectModule module)
 		{
+			module.Bind<IWeapon>().To<Sword>();
 		}
 	}
 
@@ -59,6 +46,7 @@ namespace ConsoleSamuraiApp
 
 		public override void Load(NinjectModule module)
 		{
+			module.Bind<IWeapon>().To<BareHands>();
 		}
 	}
 }

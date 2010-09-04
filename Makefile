@@ -5,6 +5,7 @@ SRC = src/
 SM_SRC = $(SRC)StateMachine/
 BS_SRC = $(SRC)BootStrapper/
 SAMPLE_SRC = $(SRC)Samples/
+CONSOLE_SAM = $(SAMPLE_SRC)ConsoleSamurai/
 
 TESTS_SRC = tests/
 SM_TESTS =  $(TESTS_SRC)StateMachine/
@@ -18,12 +19,17 @@ project: make_folders $(DLLS)
 samples: make_folders $(SAMPLES)
 all: make_folders $(DLLS) $(SPECS) $(SAMPLES)
 
-ConsoleSamurai.exe: $(DLLS) $(SAMPLE_SRC)ConsoleSamurai.cs
+ConsoleSamurai.exe: $(DLLS) $(CONSOLE_SAM)ConsoleSamurai.cs $(CONSOLE_SAM)Contexts.cs \
+					$(CONSOLE_SAM)Samurai.cs
 	$(CSC) /out:$(OUT_DIR)Samples/ConsoleSamurai.exe \
-		   $(SAMPLE_SRC)ConsoleSamurai.cs \
+		   $(CONSOLE_SAM)ConsoleSamurai.cs $(CONSOLE_SAM)Contexts.cs \
+		   $(CONSOLE_SAM)Samurai.cs \
 		   /r:bin/StateMachine.dll \
 		   /r:bin/NinjectBootStrapper.dll \
-		   /r:bin/Ninject.dll \
+		   /r:bin/Ninject.dll
+	cp lib/Ninject.dll $(OUT_DIR)\Samples
+	cp bin/StateMachine.dll $(OUT_DIR)\Samples
+	cp bin/NinjectBootStrapper.dll $(OUT_DIR)\Samples
 
 NinjectBootStrapper.dll: StateMachine.dll NinjectBootStrapper_no_dep
 NinjectBootStrapper_no_dep: $(BS_SRC)NinjectBootStrapper.cs $(BS_SRC)MainModule.cs
