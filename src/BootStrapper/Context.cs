@@ -14,7 +14,11 @@ namespace StateUI.NinjectBootStrapper
 
 		public bool IsValid 
 		{ 
-			get { return AssociatedState == _stateMachine.CurrentState; } 
+			get 
+			{ 
+				if (AssociatedState == null || _stateMachine == null) return true;
+				return AssociatedState == _stateMachine.CurrentState; 
+			} 
 		}
 
 		public State AssociatedState { get; private set; }

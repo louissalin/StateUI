@@ -45,6 +45,16 @@ namespace StateUI
 			return state;
 		}
 
+		public void ChangeState(string name)
+		{
+			var state = GetState(name);
+
+			if (state == null)
+				throw new ArgumentException(string.Format("State '{0}' does not exist", name));
+
+			ChangeState(state.Id);
+		}
+
 		public void ChangeState(int stateId)
 		{
 			if (GetState(stateId) == null)
@@ -64,6 +74,11 @@ namespace StateUI
 		public State GetState(int id)
 		{
 			return _states.SingleOrDefault(s => s.Id == id);
+		}
+
+		public State GetState(string name)
+		{
+			return _states.SingleOrDefault(s => s.Name == name);
 		}
 
 		public Path CreatePath(State from, State to)

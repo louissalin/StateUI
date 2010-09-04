@@ -25,12 +25,26 @@ namespace StateUI
 			_machine = machine;
 		}
 
+		public CreatePathExpression State(string name)
+		{
+			var state = _machine.GetState(name);
+			if (state == null)
+				throw new ArgumentException(string.Format("There is no state with name {0}", name));
+
+			return State(state);
+		}
+
 		public CreatePathExpression State(int index)
 		{
 			var state = _machine.GetState(index);
 			if (state == null)
 				throw new ArgumentException(string.Format("There is no state with index {0}", index));
 
+			return State(state);
+		}
+
+		private CreatePathExpression State(State state)
+		{
 			if (_selectingTo)
 			{
 				_to = state;

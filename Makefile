@@ -19,7 +19,6 @@ samples: make_folders $(SAMPLES)
 all: make_folders $(DLLS) $(SPECS) $(SAMPLES)
 
 ConsoleSamurai.exe: $(DLLS) $(SAMPLE_SRC)ConsoleSamurai.cs
-
 	$(CSC) /out:$(OUT_DIR)Samples/ConsoleSamurai.exe \
 		   $(SAMPLE_SRC)ConsoleSamurai.cs \
 		   /r:bin/StateMachine.dll \

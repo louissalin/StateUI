@@ -62,6 +62,44 @@ namespace StateUISpecs
 		}
 	}
 
+	public class when_getting_states_by_name : StateMachineWithOneState
+	{
+		[Observation]
+		public void should_allow_to_get_state_by_name()
+		{
+			sut.GetState("Two").ShouldEqual(sut.GetState(2));
+		}
+
+		[Observation]
+		public void should_allow_to_change_state_by_name()
+		{
+			sut.ChangeState("Two");
+			sut.CurrentState.ShouldEqual(sut.GetState(2));
+		}
+
+		[Observation]
+		public void should_throw_an_exception_when_using_the_wrong_name()
+		{
+			typeof(ArgumentException).ShouldBeThrownBy(
+					() => sut.CreatePathFrom.State("bla"))
+				.ShouldContainErrorMessage("There is no state with name bla");
+
+			sut.GetState("bla").ShouldBeNull();
+
+			typeof(ArgumentException).ShouldBeThrownBy(
+					() => sut.ChangeState("bla"))
+				.ShouldContainErrorMessage("State 'bla' does not exist");
+		}
+
+		protected override void Because()
+		{
+			base.Because();
+			sut.AddState(s => s.Name = "Two");
+			sut.CreatePathFrom.State(1).To.State("Two");
+			sut.Start();
+		}
+	}
+
 	public class when_specifying_states : StateMachineSpec
 	{
 		[Observation]

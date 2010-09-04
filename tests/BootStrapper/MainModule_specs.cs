@@ -78,8 +78,7 @@ namespace StateUISpecs.BootStrapper
 			stateMachine.CreatePathFrom.State(1).To.State(2);
 			stateMachine.Start();
 
-			rootContext = new MainContextStub(stateMachine, stateMachine.GetState(1));
-
+			rootContext = new MainContextStub();
 			sut = new MainModule(rootContext);
 		}
 
