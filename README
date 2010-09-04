@@ -1,6 +1,35 @@
-This is my breakable toy. It is not intended to be useful at all.
+This state machine lets you use Ninject and declare your bindings in contexts that are associated with states in the state machine. This way, bindings are executed by the Ninject module only if the associated state is the current state.
+
+For example, reusing the samurai examples from Ninject's own website, you can write:
+
+	_sm = new StateMachine();
+	_sm.AddState(s => s.Name = "UseSword");
+	_sm.AddState(s => s.Name = "LoseSword");
+	_sm.CreatePathFrom.State("UseSword").To.State("LoseSword");
+
+	// when starting the state machine, the first state declared
+	// is automatically loaded. So "UseSword" is the current inital state.
+	_sm.Start();
+
+	LoadKernel();
+	var samurai = _kernel.Get<Samurai>();
+	samurai.Attack();
+
+	_sm.ChangeState("LoseSword");
+	LoadKernel();
+
+	samurai = _kernel.Get<Samurai>();
+	samurai.Attack();
+
+which results in the following being outputed:
+
+	Attacking with a sword!
+	Attacking with my bare hands!
+
+Please refer to the ConsoleSamurai sample in the src/Samples directory for the complete code.
 
 Compiling:
+---------
 
 To compile, download NInject and add NInject.dll to the lib/ folder. If you'll want to run the unit tests, you will need nunit.framework.dll and SpecUnit.dll in the lib/ folder also. Make sure that the nunit dll is of the same version as the one used to compile SpecUnit.
 
